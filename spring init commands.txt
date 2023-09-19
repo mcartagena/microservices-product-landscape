@@ -1,4 +1,4 @@
-spring init commands:
+Generating spring skeleton commands:
 
 1.-
 spring init \
@@ -53,3 +53,44 @@ spring init \
 --dependencies=actuator,webflux \
 --version=1.0.0-SNAPSHOT \
 product-composite-service
+
+Running the microservices as background process:
+
+java -jar microservices/product-composite-service/build/libs/product-composite-service-1.0.0-SNAPSHOT.jar se.magnus.microservices.composite.product.ProductCompositeServiceApplication &
+java -jar microservices/product-service/build/libs/product-service-1.0.0-SNAPSHOT.jar se.magnus.microservices.core.product.ProductServiceApplication &
+java -jar microservices/recommendation-service/build/libs/recommendation-service-1.0.0-SNAPSHOT.jar se.magnus.microservices.core.recommendation.RecommendationServiceApplication &
+java -jar microservices/review-service/build/libs/review-service-1.0.0-SNAPSHOT.jar se.magnus.microservices.core.review.ReviewServiceApplication &
+
+Testing the endpoints:
+
+curl http://localhost:7000/product-composite/1 | jq .
+
+Verify that a 404 (Not Found) error is returned for a non-existing productId (13)
+
+curl http://localhost:7000/product-composite/13 -i
+
+Verify that no recommendations are returned for productId 113
+
+curl http://localhost:7000/product-composite/113 -s | jq .
+
+Verify that no reciewws are returned for productId 213
+
+curl http://localhost:7000/product-composite/213 -s | jq .
+
+Verify that a 422 (Unprocessable Entity) error is returned for a productId that is out of range (-1)
+
+curl http://localhost:7000/product-composite/-1 -i
+
+Verify that a 400 (Bad Request) error is returned for a productId that is not a number, i.e. invalid format
+
+curl http://localhost:7000/product-composite/invalidProductId -i
+
+Shut down the microservices:
+
+kill $(jobs -p)
+
+
+
+
+
+

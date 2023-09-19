@@ -1,6 +1,5 @@
 package se.magnus.microservices.composite.product;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,8 @@ import se.magnus.microservices.composite.product.services.ProductCompositeIntegr
 import se.magnus.util.exceptions.InvalidInputException;
 import se.magnus.util.exceptions.NotFoundException;
 
-import static java.util.Collections.singletonList;
+import java.util.List;
+
 import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
@@ -39,9 +39,9 @@ class ProductCompositeServiceApplicationTests {
 		when(compositeIntegration.getProduct(PRODUCT_ID_OK)).
 				thenReturn(new Product(PRODUCT_ID_OK, "name", 1, "mock-address"));
 		when(compositeIntegration.getRecommendations(PRODUCT_ID_OK)).
-				thenReturn(singletonList(new Recommendation(PRODUCT_ID_OK, 1, "author", 1, "content", "mock address")));
+				thenReturn(List.of(new Recommendation(PRODUCT_ID_OK, 1, "author", 1, "content", "mock address")));
 		when(compositeIntegration.getReviews(PRODUCT_ID_OK)).
-				thenReturn(singletonList(new Review(PRODUCT_ID_OK, 1, "author", "subject", "content", "mock address")));
+				thenReturn(List.of(new Review(PRODUCT_ID_OK, 1, "author", "subject", "content", "mock address")));
 
 		when(compositeIntegration.getProduct(PRODUCT_ID_NOT_FOUND)).thenThrow(new NotFoundException("NOT FOUND: " + PRODUCT_ID_NOT_FOUND));
 
