@@ -1,0 +1,20 @@
+fileignoreconfig:
+- filename: docker-compose.yaml
+  checksum: 43db5763a57a31b679d9b9fc72ea62203c682da1d88ee663d08526f4f4563b33
+- filename: microservices/product-service/src/main/java/se/magnus/microservices/core/product/services/ProductServiceImpl.java
+  checksum: bb03f284e60667e75638fd6e1cb59fff7181ad6b6fec837ddf037227597c3568
+- filename: microservices/product-service/src/test/java/se/magnus/microservices/core/product/PersistenceTests.java
+  checksum: 5eed2fa974a0a5fda98be0eae36a2912c057957660863e32a770b3af5afdecf3
+- filename: microservices/product-service/src/test/java/se/magnus/microservices/core/product/ProductServiceApplicationTests.java
+  checksum: c4445f32e4ff9df87fd646a2db9bb52e0fa19a0909ccefd908480e8fa0b25313
+- filename: microservices/recommendation-service/src/main/java/se/magnus/microservices/core/recommendation/services/RecommendationServiceImpl.java
+  checksum: 0094b3c01704ae7395892561a213fc5349955f0c38392735a505c6e2bea39be0
+- filename: microservices/recommendation-service/src/test/java/se/magnus/microservices/core/recommendation/PersistenceTests.java
+  checksum: aa06a35402559725fcda6f87fa632ebe2e7156005c63b465f5a089940b61f77b
+- filename: microservices/recommendation-service/src/test/java/se/magnus/microservices/core/recommendation/RecommendationServiceApplicationTests.java
+  checksum: 8ee6576f5d995122718b5b0d4689fced24ff4816692793ff90650202d73c3d1b
+- filename: microservices/review-service/src/main/java/se/magnus/microservices/core/review/services/ReviewServiceImpl.java
+  checksum: 5ebea0d034a1d301070baabd9db0ee5731f54db358bbaf651d03f1ffd0dcdb3e
+- filename: microservices/review-service/src/test/java/se/magnus/microservices/core/review/ReviewServiceApplicationTests.java
+  checksum: 9612368d0e16b8145d9d2816aadce2c52ff1ce960c073307e0e230acc5fd4810
+version: "1.0"
