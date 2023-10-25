@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.test.context.TestPropertySource;
 import se.magnus.microservices.core.recommendation.persistence.RecommendationEntity;
 import se.magnus.microservices.core.recommendation.persistence.RecommendationRepository;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataMongoTest
+@TestPropertySource(properties = "de.flapdoodle.mongodb.embedded.version=5.0.5")
 public class PersistenceTests {
     @Autowired
     private RecommendationRepository repository;
