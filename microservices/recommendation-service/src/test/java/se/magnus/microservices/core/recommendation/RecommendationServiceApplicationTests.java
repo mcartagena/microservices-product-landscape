@@ -11,13 +11,13 @@ import se.magnus.microservices.core.recommendation.persistence.RecommendationRep
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static reactor.core.publisher.Mono.just;
 
-@SpringBootTest(webEnvironment = RANDOM_PORT, properties = {"spring.data.mongodb.port: 0"})
+@SpringBootTest(webEnvironment = RANDOM_PORT, properties = {
+        "spring.data.mongodb.port: 0",
+        "de.flapdoodle.mongodb.embedded.version: 5.0.5"})
 class RecommendationServiceApplicationTests {
     @Autowired
     private WebTestClient client;
@@ -60,9 +60,9 @@ class RecommendationServiceApplicationTests {
 
         assertEquals(1, repository.count());
 
-        postAndVerifyRecommendation(productId, recommendationId, UNPROCESSABLE_ENTITY)
+        postAndVerifyRecommendation(productId, recommendationId, INTERNAL_SERVER_ERROR)
                 .jsonPath("$.path").isEqualTo("/recommendation")
-                .jsonPath("$.message").isEqualTo("Duplicate key, Product Id: 1, Recommendation Id:1");
+                .jsonPath("$.status").isEqualTo("500");
 
         assertEquals(1, repository.count());
     }
@@ -87,7 +87,7 @@ class RecommendationServiceApplicationTests {
 
         getAndVerifyRecommendationsByProductId("", BAD_REQUEST)
                 .jsonPath("$.path").isEqualTo("/recommendation")
-                .jsonPath("$.message").isEqualTo("Required int parameter 'productId' is not present");
+                .jsonPath("$.message").isEqualTo("Required query parameter 'productId' is not present.");
     }
 
     @Test

@@ -6,7 +6,7 @@ fileignoreconfig:
 - filename: microservices/product-service/src/test/java/se/magnus/microservices/core/product/PersistenceTests.java
   checksum: 5eed2fa974a0a5fda98be0eae36a2912c057957660863e32a770b3af5afdecf3
 - filename: microservices/product-service/src/test/java/se/magnus/microservices/core/product/ProductServiceApplicationTests.java
-  checksum: c4445f32e4ff9df87fd646a2db9bb52e0fa19a0909ccefd908480e8fa0b25313
+  checksum: 9a4b4aaa6f734783a2dbb952ce2875b4827c47fec9c3ad4f7b584368396fced4
 - filename: microservices/recommendation-service/src/main/java/se/magnus/microservices/core/recommendation/services/RecommendationServiceImpl.java
   checksum: 0094b3c01704ae7395892561a213fc5349955f0c38392735a505c6e2bea39be0
 - filename: microservices/recommendation-service/src/test/java/se/magnus/microservices/core/recommendation/PersistenceTests.java

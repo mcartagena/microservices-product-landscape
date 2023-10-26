@@ -91,7 +91,7 @@ class ReviewServiceApplicationTests {
 
 		getAndVerifyReviewsByProductId("", BAD_REQUEST)
 				.jsonPath("$.path").isEqualTo("/review")
-				.jsonPath("$.message").isEqualTo("Required int parameter 'productId' is not present");
+				.jsonPath("$.message").isEqualTo("Required query parameter 'productId' is not present.");
 	}
 
 	@Test
