@@ -40,11 +40,11 @@ services:
     mem_limit: 350m
     ports:
       - "27017:27017"
-    command: mongod --smallfiles
+    command: mongod 
 
   # $ mysql -uroot -h127.0.0.1 -p
   mysql:
-    image: mysql:8.1
+    image: mysql:5.7
     mem_limit: 350m
     ports:
       - "3306:3306"
