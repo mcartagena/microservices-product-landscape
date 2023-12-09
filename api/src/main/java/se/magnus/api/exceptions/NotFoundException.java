@@ -1,4 +1,4 @@
-package se.magnus.util.exceptions;
+package se.magnus.api.exceptions;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException() {

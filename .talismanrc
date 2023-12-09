@@ -1,20 +1,34 @@
 fileignoreconfig:
+- filename: api/src/main/java/se/magnus/api/event/Event.java
+  checksum: 5fcba8324cdd8f93b535526dc3d2de539b5a11132f844807ceab2c5e0ea577b4
+- filename: docker-compose-kafka.yml
+  checksum: fbe629b46c6bb995ea2feee4e4ca800d3ab08907e0d75e438fca9b3ce09e0bb4
+- filename: docker-compose-partitions.yml
+  checksum: 82e067203df3d78e515ffacfcf912c308974ff5f4e471f2c186edee0203dd6b3
 - filename: docker-compose.yaml
   checksum: 43db5763a57a31b679d9b9fc72ea62203c682da1d88ee663d08526f4f4563b33
+- filename: docker-compose.yml
+  checksum: afef9d898310012e6b9db3ebf2e21af53de4ecdd48d2b6bb05464199fa40df00
+- filename: microservices/product-composite-service/src/main/java/se/magnus/microservices/composite/product/services/ProductCompositeIntegration.java
+  checksum: 672f74a6b956fe12c3b32bcb6104dfa21e5a38a15f174b666c4cf029d89fb723
+- filename: microservices/product-composite-service/src/main/resources/application.yml
+  checksum: bbdf8ecbd8064ae226aee2d166d393564eab78c0cc70daef61ff70565ce3e3e0
 - filename: microservices/product-service/src/main/java/se/magnus/microservices/core/product/services/ProductServiceImpl.java
-  checksum: bb03f284e60667e75638fd6e1cb59fff7181ad6b6fec837ddf037227597c3568
+  checksum: 4382cbb3642f65b9887110d67ec8c62c55ae2b4b6c88d4ce0c4dbdfbfb512685
 - filename: microservices/product-service/src/test/java/se/magnus/microservices/core/product/PersistenceTests.java
   checksum: 5eed2fa974a0a5fda98be0eae36a2912c057957660863e32a770b3af5afdecf3
 - filename: microservices/product-service/src/test/java/se/magnus/microservices/core/product/ProductServiceApplicationTests.java
-  checksum: 9a4b4aaa6f734783a2dbb952ce2875b4827c47fec9c3ad4f7b584368396fced4
+  checksum: 01af240caedbea7831a6b7cec30f6e5568dba4b344cc2610eb26b2dea29bdf76
 - filename: microservices/recommendation-service/src/main/java/se/magnus/microservices/core/recommendation/services/RecommendationServiceImpl.java
-  checksum: 0094b3c01704ae7395892561a213fc5349955f0c38392735a505c6e2bea39be0
+  checksum: c475a4ec187e60dc4c90a61412164d12c01e0886324bef93929908a949c06acb
 - filename: microservices/recommendation-service/src/test/java/se/magnus/microservices/core/recommendation/PersistenceTests.java
-  checksum: aa06a35402559725fcda6f87fa632ebe2e7156005c63b465f5a089940b61f77b
+  checksum: faf4bbd9d39db8b05270c8d6b52918dd359de93e3eb6deca93528c082d34e162
 - filename: microservices/recommendation-service/src/test/java/se/magnus/microservices/core/recommendation/RecommendationServiceApplicationTests.java
-  checksum: 8ee6576f5d995122718b5b0d4689fced24ff4816692793ff90650202d73c3d1b
+  checksum: d2d08b504944ebf9aaec66633311f9eb95c14f9ec29046935c0321eba0096caf
 - filename: microservices/review-service/src/main/java/se/magnus/microservices/core/review/services/ReviewServiceImpl.java
   checksum: 5ebea0d034a1d301070baabd9db0ee5731f54db358bbaf651d03f1ffd0dcdb3e
+- filename: microservices/review-service/src/test/java/se/magnus/microservices/core/review/MySqlTestBase.java
+  checksum: 77a87094c97eedb5e1f451b101ea6e0a002595ded84835f3a56c54c4c9a9438e
 - filename: microservices/review-service/src/test/java/se/magnus/microservices/core/review/ReviewServiceApplicationTests.java
-  checksum: 9612368d0e16b8145d9d2816aadce2c52ff1ce960c073307e0e230acc5fd4810
+  checksum: 5163bdbbade8733a2379b1d6f0e842478a421883d5b742e18172ea7adaee50a8
 version: "1.0"
