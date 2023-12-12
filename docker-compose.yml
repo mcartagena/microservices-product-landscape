@@ -1,7 +1,8 @@
-version: '2.1'
+version: '3.8'
 
 services:
   product:
+    container_name: product
     build: microservices/product-service
     mem_limit: 512m
     environment:
@@ -13,6 +14,7 @@ services:
         condition: service_healthy
 
   recommendation:
+    container_name: recommendation
     build: microservices/recommendation-service
     mem_limit: 512m
     environment:
@@ -24,6 +26,7 @@ services:
         condition: service_healthy
 
   review:
+    container_name: review
     build: microservices/review-service
     mem_limit: 512m
     environment:
@@ -35,6 +38,7 @@ services:
         condition: service_healthy
 
   product-composite:
+    container_name: product-composite
     build: microservices/product-composite-service
     mem_limit: 512m
     ports:

@@ -1,6 +1,14 @@
 package se.magnus.microservices.composite.product.services;
 
+import static java.util.logging.Level.FINE;
+import static reactor.core.publisher.Flux.empty;
+import static se.magnus.api.event.Event.Type.CREATE;
+import static se.magnus.api.event.Event.Type.DELETE;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +17,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Flux;
@@ -28,17 +35,6 @@ import se.magnus.api.event.Event;
 import se.magnus.api.exceptions.InvalidInputException;
 import se.magnus.api.exceptions.NotFoundException;
 import se.magnus.util.http.HttpErrorInfo;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
-
-import java.io.IOException;
-
-import static java.util.logging.Level.FINE;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
-import static reactor.core.publisher.Flux.empty;
-import static se.magnus.api.event.Event.Type.CREATE;
-import static se.magnus.api.event.Event.Type.DELETE;
 
 @Component
 public class ProductCompositeIntegration implements ProductService, RecommendationService, ReviewService {
@@ -79,9 +75,9 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
         this.mapper = mapper;
         this.streamBridge = streamBridge;
 
-        productServiceUrl = "http://" + productServiceHost + ":" + productServicePort + "/product";
-        recommendationServiceUrl = "http://" + recommendationServiceHost + ":" + recommendationServicePort + "/recommendation";
-        reviewServiceUrl = "http://" + reviewServiceHost + ":" + reviewServicePort + "/review";
+        productServiceUrl = "http://" + productServiceHost + ":" + productServicePort;
+        recommendationServiceUrl = "http://" + recommendationServiceHost + ":" + recommendationServicePort;
+        reviewServiceUrl = "http://" + reviewServiceHost + ":" + reviewServicePort;
     }
 
     @Override
@@ -107,9 +103,8 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
     @Override
     public Mono<Void> deleteProduct(int productId) {
 
-        return Mono.fromRunnable(() ->
-                        sendMessage("products-out-0",
-                                new Event(DELETE, productId, null)))
+        return Mono.fromRunnable(() -> sendMessage("products-out-0",
+                        new Event(DELETE, productId, null)))
                 .subscribeOn(publishEventScheduler).then();
     }
 
@@ -162,7 +157,8 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
 
         LOG.debug("Will call the getReviews API on URL: {}", url);
 
-        // Return an empty result if something goes wrong to make it possible for the composite service to return partial responses
+        // Return an empty result if something goes wrong to make it possible
+        // for the composite service to return partial responses
         return webClient.get().uri(url).retrieve()
                 .bodyToFlux(Review.class)
                 .log(LOG.getName(), FINE)
@@ -172,7 +168,8 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
     @Override
     public Mono<Void> deleteReviews(int productId) {
 
-        return Mono.fromRunnable(() -> sendMessage("reviews-out-0", new Event(DELETE, productId, null)))
+        return Mono.fromRunnable(() -> sendMessage("reviews-out-0",
+                        new Event(DELETE, productId, null)))
                 .subscribeOn(publishEventScheduler).then();
     }
 

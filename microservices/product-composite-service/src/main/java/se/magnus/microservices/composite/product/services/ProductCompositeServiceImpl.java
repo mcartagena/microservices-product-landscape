@@ -19,13 +19,15 @@ import static java.util.logging.Level.FINE;
 
 @RestController
 public class ProductCompositeServiceImpl implements ProductCompositeService {
-    private static final Logger LOG = LoggerFactory.getLogger(ProductCompositeServiceImpl.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(ProductCompositeServiceImpl.class);
 
     private final ServiceUtil serviceUtil;
     private ProductCompositeIntegration integration;
 
     @Autowired
-    public ProductCompositeServiceImpl(ServiceUtil serviceUtil, ProductCompositeIntegration integration) {
+    public ProductCompositeServiceImpl(ServiceUtil serviceUtil,
+                                       ProductCompositeIntegration integration) {
         this.serviceUtil = serviceUtil;
         this.integration = integration;
     }
@@ -36,31 +38,37 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
         try {
             List<Mono> monoList = new ArrayList<>();
 
-            LOG.debug("createCompositeProduct: creates a new composite entity for productId: {}", body.getProductId());
+            LOG.debug("createCompositeProduct: creates a new composite " +
+                    "entity for productId: {}", body.getProductId());
 
-            Product product = new Product(body.getProductId(), body.getName(), body.getWeight(), null);
+            Product product = new Product(body.getProductId(),
+                    body.getName(), body.getWeight(), null);
             monoList.add(integration.createProduct(product));
 
             if (body.getRecommendations() != null) {
                 body.getRecommendations().forEach(r -> {
                     Recommendation recommendation = new Recommendation(body.getProductId(),
-                            r.getRecommendationId(), r.getAuthor(), r.getRate(), r.getContent(), null);
+                            r.getRecommendationId(), r.getAuthor(), r.getRate(),
+                            r.getContent(), null);
                     monoList.add(integration.createRecommendation(recommendation));
                 });
             }
 
             if (body.getReviews() != null) {
                 body.getReviews().forEach(r -> {
-                    Review review = new Review(body.getProductId(), r.getReviewId(), r.getAuthor(),
-                            r.getSubject(), r.getContent(), null);
+                    Review review = new Review(body.getProductId(), r.getReviewId(),
+                            r.getAuthor(), r.getSubject(),
+                            r.getContent(), null);
                     monoList.add(integration.createReview(review));
                 });
             }
 
-            LOG.debug("createCompositeProduct: composite entites created for productId: {}", body.getProductId());
+            LOG.debug("createCompositeProduct: composite entites created " +
+                    "for productId: {}", body.getProductId());
 
             return Mono.zip(r -> "", monoList.toArray(new Mono[0]))
-                    .doOnError(ex -> LOG.warn("createCompositeProduct failed: {}", ex.toString()))
+                    .doOnError(ex -> LOG.warn("createCompositeProduct " +
+                            "failed: {}", ex.toString()))
                     .then();
 
         } catch (RuntimeException re) {
@@ -80,7 +88,8 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
                         integration.getProduct(productId),
                         integration.getRecommendations(productId).collectList(),
                         integration.getReviews(productId).collectList())
-                .doOnError(ex -> LOG.warn("getCompositeProduct failed: {}", ex.toString()))
+                .doOnError(ex -> LOG.warn("getCompositeProduct failed: {}",
+                        ex.toString()))
                 .log(LOG.getName(), FINE);
     }
 
@@ -116,23 +125,35 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
         int weight = product.getWeight();
 
         // 2. Copy summary recommendation info, if available
-        List<RecommendationSummary> recommendationSummaries = (recommendations == null) ? null :
+        List<RecommendationSummary> recommendationSummaries =
+                (recommendations == null) ? null :
                 recommendations.stream()
-                        .map(r -> new RecommendationSummary(r.getRecommendationId(), r.getAuthor(), r.getRate(), r.getContent()))
+                        .map(r -> new RecommendationSummary(r.getRecommendationId(),
+                                r.getAuthor(),
+                                r.getRate(),
+                                r.getContent()))
                         .collect(Collectors.toList());
 
         // 3. Copy summary review info, if available
         List<ReviewSummary> reviewSummaries = (reviews == null) ? null :
                 reviews.stream()
-                        .map(r -> new ReviewSummary(r.getReviewId(), r.getAuthor(), r.getSubject(), r.getContent()))
+                        .map(r -> new ReviewSummary(r.getReviewId(),
+                                r.getAuthor(),
+                                r.getSubject(),
+                                r.getContent()))
                         .collect(Collectors.toList());
 
         // 4. Create info regarding the involved microservices addresses
         String productAddress = product.getServiceAddress();
-        String reviewAddress = (reviews != null && reviews.size() > 0) ? reviews.get(0).getServiceAddress() : "";
-        String recommendationAddress = (recommendations != null && recommendations.size() > 0) ? recommendations.get(0).getServiceAddress() : "";
-        ServiceAddresses serviceAddresses = new ServiceAddresses(serviceAddress, productAddress, reviewAddress, recommendationAddress);
+        String reviewAddress = (reviews != null && reviews.size() > 0) ?
+                reviews.get(0).getServiceAddress() : "";
+        String recommendationAddress = (recommendations != null &&
+                recommendations.size() > 0) ?
+                recommendations.get(0).getServiceAddress() : "";
+        ServiceAddresses serviceAddresses = new ServiceAddresses(serviceAddress,
+                productAddress, reviewAddress, recommendationAddress);
 
-        return new ProductAggregate(productId, name, weight, recommendationSummaries, reviewSummaries, serviceAddresses);
+        return new ProductAggregate(productId, name, weight,
+                recommendationSummaries, reviewSummaries, serviceAddresses);
     }
 }
