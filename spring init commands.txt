@@ -89,6 +89,29 @@ Shut down the microservices:
 
 kill $(jobs -p)
 
+Before run docker-compose enable colima:
+colima start --memory 4
+
+List topics from kafka:
+
+docker-compose exec kafka /bin/kafka-topics --bootstrap-server=localhost:9092 --list
+
+To see the partitions:
+
+docker-compose exec kafka /bin/kafka-topics --bootstrap-server=localhost:9092 --describe --topic products
+
+To see all the messages in a specific topic:
+
+docker-compose exec kafka /bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic products --from-beginning --timeout-ms 6000
+
+To see all the messages in a specific partition:
+
+docker-compose exec kafka /bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic products --from-beginning --timeout-ms 6000 --partition 1
+
+When message:
+! Network microservices-product-landscape_default                Resource is still in use
+
+docker-compose down --remove-orphans
 
 
 
